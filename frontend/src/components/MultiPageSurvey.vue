@@ -161,8 +161,9 @@ export default {
   },
   methods: {
     displayResults(sender) {
-      this.surveyResults = JSON.stringify(sender.data, null, 4);
+      this.surveyResults = JSON.stringify(sender.data);
       this.isSurveyCompleted = true;
+      this.$http.post('/userdata',sender.data);
     },
   },
 };
