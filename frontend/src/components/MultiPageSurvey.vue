@@ -156,6 +156,7 @@ export default {
     return {
       survey,
       surveyResults: "",
+      analysisResults: "",
       isSurveyCompleted: false,
     };
   },
@@ -163,7 +164,20 @@ export default {
     displayResults(sender) {
       this.surveyResults = JSON.stringify(sender.data);
       this.isSurveyCompleted = true;
-      this.$http.post('/userdata',sender.data);
+      this.$http.post("/userdata", sender.data);
+      //가장 많이 선택된 후보자를 찾아서 표시
+      this.last_name = Object.values(sender.data);
+      this.result_analysis = {
+        Chung: 0,
+        Jang: 0,
+        Kang: 0,
+        Lee: 0,
+        Ok: 0,
+      };
+      for (var i = 0; i < this.last_name.length; i++) {
+        this.result_analysis[this.last_name[i]] += 1;
+      }
+      this.analysisResults = JSON.stringify(this.result_analysis);
     },
   },
 };
