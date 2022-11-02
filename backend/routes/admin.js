@@ -5,5 +5,6 @@ const analysisController = require('../controllers/analysis');
 
 //router.get('/query', analysisController.getQuery);
 router.get('/analysis', analysisController.getAnalysis);
+router.get('/candidate',analysisController.getCandidate);
 router.post('/userdata', analysisController.postUserData);
 module.exports = router;

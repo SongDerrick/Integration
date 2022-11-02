@@ -64,7 +64,7 @@ const surveyJson = {
             "광주광역시 청소년의 안전을 확보하기 위한 가장 좋은 방안을 선택해주세요",
           type: "radiogroup",
           choices: [
-            { value: "Jang", text: "학교폭력 전담 지도 기관 및 정책 신설" },
+            { value: "Kang", text: "학교폭력 전담 지도 기관 및 정책 신설" },
             {
               value: "Lee",
               text: "학생 건강체력 평가를 통해 저 체력 학생 특별 관리 / 친환경 급식 / 통학버스 무료 지원",

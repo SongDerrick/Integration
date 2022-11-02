@@ -10,6 +10,30 @@ const p = path.join(
     'userdata1.json' 
 ); // path configuration
 
+exports.getCandidate = (req, res, next) => {
+    const newUser = userData; // user data 가져옴
+    const newUserArray = []; // user data 를 어레이로
+
+    for (var key in newUser) {
+        if (newUser.hasOwnProperty(key)) {
+            //console.log(key + " -> " + newUser[key]); 디버그 용
+            newUserArray.push(newUser[key]); // user data의 후보자 네임을 어레이로
+        }
+    } 
+
+    const occurrences = {};
+    for (const v of newUserArray) {
+     occurrences[v] = occurrences[v] ? occurrences[v] + 1 : 1;
+    } // 갯수세기
+
+    let maxkey = Object.keys(occurrences).reduce(function (a, b) { return occurrences[a] > occurrences[b] ? a : b });
+
+    console.log(maxkey);
+    res.send(maxkey)
+} // Function -> 최다 득표 후보자 도출 API
+
+
+
 exports.getAnalysis = (req, res, next) => {
 
 
@@ -35,7 +59,7 @@ exports.getAnalysis = (req, res, next) => {
     for (const v of newUserArray) {
      occurrences[v] = occurrences[v] ? occurrences[v] + 1 : 1;
     } // 갯수세기
-    // console.log(occurrences); //갯수 세서 객체로 디버그 용 코드
+    //console.log(occurrences); //갯수 세서 객체로 디버그 용 코드
 
     const candidatekey = Object.values(occurrences);
     const max = Math.max(...candidatekey);
@@ -52,7 +76,7 @@ exports.getAnalysis = (req, res, next) => {
 
     if(count == 1){ // 1. 최대 득표 후보자가 한명일 경우 
         let maxkey = Object.keys(occurrences).reduce(function (a, b) { return occurrences[a] > occurrences[b] ? a : b });
-        console.log(maxkey); //가장 많은 표 받은 후보 디버그 용 코드
+        //console.log(maxkey); //가장 많은 표 받은 후보 디버그 용 코드
         // console.log(occurrences[maxkey]);// 가장 많은 표 받은 후보의 선정 횟수 예시 5회 5/11회
 
         for(i = 0; i < newUserArray.length; i++){
@@ -82,8 +106,9 @@ exports.getAnalysis = (req, res, next) => {
         } // 선택한 문항에서 후보자의 공약 추출 -> 즉 사용자가 고른 공약 중 가장 적합한 후보자의 것만 추출함 -> result로
     
         res.send(result);
+        //console.log(arr);
     }
-    else{ // 두 명 이상의 후보자가 최대 득표를 받았을 경우
+    else{ // 2. 두 명 이상의 후보자가 최대 득표를 받았을 경우
 
       for(i in candidatekey){
         if(candidatekey[i]==max)
@@ -121,6 +146,7 @@ exports.getAnalysis = (req, res, next) => {
         }
     } 
       res.send(result)
+      console.log(result)
     }
 
 }; // Function 2 : GET Result Data from user data and Find largest valued candidate
