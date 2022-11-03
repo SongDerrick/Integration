@@ -152,6 +152,18 @@ export default {
   data() {
     const survey = new Model(surveyJson);
     survey.onComplete.add(this.displayResults);
+    survey.onUpdateQuestionCssClasses.add(function (survey, options) {
+      var classes = options.cssClasses
+      classes.mainRoot += " sv_qstn2";
+      classes.root = "sq-root";
+      classes.title += " sq-title"
+      if (options.question.isRequired) {
+        classes.title += " sq-title-required";
+        classes.root += " sq-root-required";
+      }
+      if (options.question.getType() === "checkbox") {
+        classes.root += " sq-root-cb";
+      }
 
     return {
       survey,
@@ -169,13 +181,37 @@ export default {
 };
 </script>
 <style>
-#surveyElement {
-  --primary: #1ab7fa;
-  --primary-light: rgba(26, 183, 250, 0.1);
-  --secondary: #1ab7fa;
-  --background: #555555;
-  --background-dim: #4d4d4d;
-  --background-dim-light: #4d4d4d;
-  --foreground: #ededed;
-}
+.sv_qstn .sq-root {
+    border: 1px solid gray;
+    border-left: 4px solid #18a689;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  .sv_qstn .sq-root-cb {
+    border-left: 4px solid orange;
+  }
+  .sv_qstn2 .sq-root {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    border-left: 4px solid #18a689;
+  }
+  .sv_qstn2 .sq-root-cb {
+    border-left: 4px solid orange;
+  }
+  .sq-title {
+    font-size: 25px;
+  }
+  .sq-title-required {
+    color: black;
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .sq-label {
+    margin-left: 30px;
+  }
+  .sq-item:nth-child(1) {
+    margin-bottom: 5px;
+  }
 </style>
